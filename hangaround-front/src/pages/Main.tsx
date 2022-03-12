@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Button } from '@mui/material'
-import { MainLogo } from '../statics/images/index'
+import { MainLogo } from '../statics/images/index.ts'
 import '../index.css'
 
 export default function Main(): React.ReactElement {
