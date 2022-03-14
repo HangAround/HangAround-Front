@@ -15,3 +15,16 @@ parserOptions:
 plugins:
   - react
   - '@typescript-eslint'
+rules:
+  max-len:
+    - error
+    - code: 100
+      ignoreUrls: true
+      ignoreRegExpLiterals: true
+      ignorePattern: "^(\
+        \\} from '\\S+'|\
+          from '\\S+'|\
+        import .* from '\\S+'|\
+        [ ]*(export )?(async )?function .*|\
+        [ ]*[a-zA-Z0-9]+=\\{[^}]*\\}\
+        )$"

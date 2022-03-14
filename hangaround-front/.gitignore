@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-pacakge-lock.json
+package-lock.json
 yarn.lock
 
 # testing

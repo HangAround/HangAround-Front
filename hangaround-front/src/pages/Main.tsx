@@ -1,26 +1,43 @@
 import React from 'react'
+import { makeStyles } from '@mui/styles'
 import { Box, Button } from '@mui/material'
-import { MainLogo } from '../statics/images/index.ts'
+// TODO(seungji): png 파일 모듈로 import 하는 법 찾아보기
 import '../index.css'
 
+const useStyles = makeStyles({
+    root: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: "10px",
+    },
+    button: {
+      backgroundColor: '#7030A0',
+      width: 300,
+      height: 150,
+      color: '#fff',
+      fontSize: 55,
+      fontFamily: 'DungGeunmo',
+    }
+  })
+
 export default function Main(): React.ReactElement {
+  const classes = useStyles()
+
   return (
-    <Box className="main">
-      <Box display="flex" justifyContent="center">
-        <Box className="mainLoginButtonBox" style={{ position: 'absolute', left: 500, top: 750 }}>
-          <Button style={{ fontFamily: 'DungGeunmo', height: 'fit-content', fontSize: 55, color: '#fff' }}>
-            WITHOUT LOGIN
-          </Button>
-          <Button style={{ fontFamily: 'DungGeunmo', height: 'fit-content', marginRight: 50, marginLeft: 50, fontSize: 55, color: '#fff' }}>
-            OR
-          </Button>
-          <Button style={{ fontFamily: 'DungGeunmo', height: 'fit-content', fontSize: 55, color: '#fff' }}>
-            KAKAO LOGIN
-          </Button>
-        </Box>
-        <Box style={{ display: 'flex', justifyContent: 'center' }}>
-          <img src={MainLogo} alt="logo" />
-        </Box>
+    <Box className={classes.root}>
+      <img src={require("../statics/images/RobotLoginLogo.png")} alt="logo" />
+      <Box display="flex" flexDirection="row">
+        <Button
+          className={classes.button}
+          style={{ marginRight: 100 }}
+        >
+          New
+        </Button>
+        <Button className={classes.button}>
+          Join
+        </Button>
       </Box>
     </Box>
   )

@@ -1,44 +1,51 @@
 import React from 'react'
-import { createStyles, makeStyles } from '@mui/styles'
+import { useNavigate } from 'react-router'
+import { makeStyles } from '@mui/styles'
 import { Box, Button } from '@mui/material'
-import { RobotLoginLogo } from '../statics/images/index.ts'
+
 import '../index.css'
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: "10px",
-    },
-    button: {
-      backgroundColor: '#7030A0',
-      width: 300,
-      height: 150,
-      color: '#fff',
-      fontSize: 55,
-      fontFamily: 'DungGeunmo',
-    }
-  }),
-)
+const useStyles = makeStyles({
+  root: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "10px",
+  },
+  button: {
+    fontFamily: 'DungGeunmo',
+    height: 'fit-content',
+    fontSize: 55,
+    color: '#fff'
+  },
+})
 
 export default function Main(): React.ReactElement {
   const classes = useStyles()
+  const navigate = useNavigate()
 
   return (
-    <Box className={classes.root}>
-      <img src={RobotLoginLogo} alt="logo" />
-      <Box display="flex" flexDirection="row">
-        <Button
-          className={classes.button}
-          style={{ marginRight: 100 }}
+    <Box className="main">
+      <Box display="flex" justifyContent="center">
+        <Box
+          className="mainLoginButtonBox"
+          style={{ position: 'absolute', left: 500, top: 750 }}
         >
-          New
-        </Button>
-        <Button className={classes.button}>
-          Join
-        </Button>
+          <Button className={classes.button} onClick={() => navigate('/')}>
+            WITHOUT LOGIN
+          </Button>
+          <Button
+            style={{ fontFamily: 'DungGeunmo',
+            height: 'fit-content', marginRight: 50, marginLeft: 50, fontSize: 55, color: '#fff' }}>
+            OR
+          </Button>
+          <Button className={classes.button}>
+            KAKAO LOGIN
+          </Button>
+        </Box>
+        <Box style={{ display: 'flex', justifyContent: 'center' }}>
+          <img src={require("../statics/images/MainLogo.png")} alt="logo" />
+        </Box>
       </Box>
     </Box>
   )
