@@ -3,9 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { render } from 'react-dom'
 import { StyledEngineProvider } from '@mui/material'
 import './index.css'
-import Login from './pages/Login.tsx'
-import Main from './pages/Main.tsx'
-import Room from './pages/Room.tsx'
+import Login from './pages/Login'
+import Main from './pages/Main'
+import Room from './pages/Room'
 import './statics/fonts/index.css'
 
 const rootElement = document.getElementById('root')

@@ -1,0 +1,6 @@
+typeRoots: 
+  - "src/types"
+compilerOptions:
+  types:
+    - "node"
+
