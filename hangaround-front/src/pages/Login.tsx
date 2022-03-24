@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles'
 import { Box, Button } from '@mui/material'
 
 import '../index.css'
+import { KAKAO_LOGIN_URL } from '../api/ApiPath.ts'
 
 const useStyles = makeStyles({
   root: {
@@ -39,7 +40,7 @@ export default function Main(): React.ReactElement {
             height: 'fit-content', marginRight: 50, marginLeft: 50, fontSize: 55, color: '#fff' }}>
             OR
           </Button>
-          <Button className={classes.button}>
+          <Button className={classes.button} href={KAKAO_LOGIN_URL}>
             KAKAO LOGIN
           </Button>
         </Box>
