@@ -1,14 +1,16 @@
-import React, { StrictMode } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
+import App from './App'
 
 import './index.css'
-import App from './App'
+import './statics/fonts/index.css'
 
 const rootElement = document.getElementById('root')
 
 render(
-  <StrictMode>
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>
+  ,
   rootElement
 )

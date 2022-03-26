@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 import { makeStyles } from '@mui/styles'
 import { Box, Button } from '@mui/material'

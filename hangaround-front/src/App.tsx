@@ -6,6 +6,7 @@ import './index.css'
 import Login from './pages/Login'
 import Main from './pages/Main'
 import './statics/fonts/index.css'
+import GameRoom from './pages/gameRoom'
 
 export default function App(): ReactElement {
   return (
@@ -13,6 +14,7 @@ export default function App(): ReactElement {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="room" element={<GameRoom />} />
           <Route path="/" element={<Main />} />
         </Routes>
       </BrowserRouter>
