@@ -4,13 +4,14 @@ import { Box } from '@mui/material'
 // TODO(seungji): png 파일 모듈로 import 하는 법 찾아보기
 import VideoGroupWrapper from './VideoGroupWrapper'
 import Member from './Member'
+import OptionBox from './OptionBox'
 
 const useStyles = makeStyles({
     root: {
       display: "flex",
       flexDirection: "row",
       backgroundColor: '#000',
-      height: 'auto'
+      height: '1500px'
     },
     optionBox: {
       display: 'flex',
@@ -39,10 +40,7 @@ export default function GameRoom(): React.ReactElement {
   return (
     <Box className={classes.root}>
       <VideoGroupWrapper />
-      <Box className={classes.optionBox}>
-        <Box className={classes.optionGroup}>
-        </Box>
-      </Box>
+      <OptionBox />
     </Box>
   )
 }

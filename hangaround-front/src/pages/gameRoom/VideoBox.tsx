@@ -6,8 +6,8 @@ import Member from './Member'
 
 const useStyles = makeStyles({
     videoBox: {
-      width: '400px',
-      height: '400px',
+      width: '500px',
+      height: '500px',
       backgroundColor: '#C4C4C4',
       margin: '30px',
     },
