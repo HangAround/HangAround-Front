@@ -4,19 +4,14 @@ import { Box } from '@mui/material'
 // TODO(seungji): png 파일 모듈로 import 하는 법 찾아보기
 import '../index.css'
 import Member from './Member'
+import VideoBox from './VideoBox'
 
 const useStyles = makeStyles({
     videoGroup: {
       width: '70%',
       display: 'flex',
       flexDirection: 'column',
-    },
-    videoBox: {
-      width: '500px',
-      height: '500px',
-      backgroundColor: '#C4C4C4',
-      margin: '50px',
-    },
+    }
   })
 
 interface Props {
@@ -30,12 +25,12 @@ export default function VideoGroupWrapper(props: Props): React.ReactElement {
   return (
       <Box className={classes.videoGroup}>
         <Box style={{ margin: 50, display: 'flex', flexDirection: 'row' }}>
-          <Box className={classes.videoBox} />
-          <Box className={classes.videoBox} />
+          <VideoBox />
+          <VideoBox />
         </Box>
         <Box style={{ margin: 50, display: 'flex', flexDirection: 'row' }}>
-          <Box className={classes.videoBox} />
-          <Box className={classes.videoBox} />
+          <VideoBox />
+          <VideoBox />
         </Box>
       </Box>
   )
