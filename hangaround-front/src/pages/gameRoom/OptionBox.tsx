@@ -13,7 +13,7 @@ const useStyles = makeStyles({
       flexDirection: 'column',
     },
     optionGroup: {
-      width: '600px',
+      width: '90%',
       height: '1000px',
       backgroundColor: '#ffffff',
       marginTop: '30px',
@@ -32,7 +32,7 @@ export default function OptionBox(): React.ReactElement {
       <Box className={classes.optionBox}>
         <Box display="flex" flexDirection={"row"}>
           <Typography color="white" variant="h3" fontFamily="Dunggeunmo">채팅방 이름</Typography>
-          <Box marginLeft={15}>
+          <Box marginLeft={0}>
             <Button>
               <InsertLink style={{ color: "#300253", width: 50, height: 50 }} />
             </Button>

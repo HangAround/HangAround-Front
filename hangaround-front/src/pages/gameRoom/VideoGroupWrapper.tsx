@@ -16,36 +16,38 @@ const useStyles = makeStyles({
 //   members: Member[]
 // }
 
-export default function VideoGroupWrapper(): React.ReactElement {
-  // const { members } = props
-  const classes = useStyles()
-
-  return (
-      <Box className={classes.videoGroup}>
-        <Box 
-          style={{
-            margin: 50,
-            marginBottom: 5,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center'
-          }}
-        >
-          <VideoBox />
-          <VideoBox />
+export default function VideoGroupWrapper(
+  props: { myVideoRef?: any, videos: any[], otherVideoRef?: any }
+): React.ReactElement {
+    // const { members } = props
+    const classes = useStyles()
+    console.log(props.videos)
+    return (
+        <Box className={classes.videoGroup}>
+          <Box 
+            style={{
+              margin: 50,
+              marginBottom: 5,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}
+          >
+            <VideoBox videoRef={props.myVideoRef} video={props.videos[0]} />
+            <VideoBox videoRef={props.otherVideoRef} video={props.videos[1]} />
+          </Box>
+          <Box
+            style={{
+              margin: 50,
+              marginTop: 5,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}
+          >
+            <VideoBox />
+            <VideoBox />
+          </Box>
         </Box>
-        <Box
-          style={{
-            margin: 50,
-            marginTop: 5,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center'
-          }}
-        >
-          <VideoBox />
-          <VideoBox />
-        </Box>
-      </Box>
-  )
+    )
 }
