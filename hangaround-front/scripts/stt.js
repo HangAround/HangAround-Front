@@ -1,4 +1,4 @@
-//import {checkWord} from "./check.js";
+import {checkWord} from "./check.js";
 
 // let p = null;
 //
@@ -74,9 +74,9 @@ recognition.onresult = async function (e) {
     // makeNewTextContent();
 
 
-    //2번 문제
-     //if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2]) && ( await checkWord(texts.substring(0, 2))===true)) {
-    if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2])) {
+    //2번 문제 => checkWord 함수가 호출이 안됨...
+    if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2]) && ( await checkWord(texts.substring(0, 2)))) {
+    //if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2])) {
         resultText.textContent = "정답!";
     } else {
         resultText.textContent = "땡!"
