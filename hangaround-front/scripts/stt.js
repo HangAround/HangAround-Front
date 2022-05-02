@@ -1,8 +1,19 @@
+//import {checkWord} from "./check.js";
 
-let makeNewTextContent = function () {
-    p = document.createElement('p');
-    document.querySelector('.words').appendChild(p);
-};
+// let p = null;
+//
+// let makeNewTextContent = function () {
+//     p = document.createElement('p');
+//     document.querySelector('.words').appendChild(p);
+// };
+
+let cons = document.createElement('p');
+document.querySelector('.words').appendChild(cons);
+let speechText = document.createElement('p');
+document.querySelector('.words').appendChild(speechText);
+let resultText = document.createElement('p');
+document.querySelector('.words').appendChild(resultText);
+
 
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -10,7 +21,6 @@ const recognition = new SpeechRecognition();
 recognition.interimResults = true;
 recognition.lang = 'ko-KR';
 
-let p = null;
 
 //초성 랜덤 생성
 const consonant = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
@@ -26,15 +36,16 @@ while (true) {
         second = Math.floor(Math.random() * consonant.length);
 }
 
-makeNewTextContent(); // 초성을 출력하기 전에 새로운 문단을 추가한다.
+//makeNewTextContent(); // 초성을 출력하기 전에 새로운 문단을 추가한다.
 
-p.textContent = consonant[first] + consonant[second];
+cons.textContent = consonant[first] + consonant[second];
 console.log(consonant[first] + consonant[second]);
 
 
 recognition.start();
+
 recognition.onstart = function () {
-    makeNewTextContent(); // 음성 인식 시작시마다 새로운 문단을 추가한다.
+    // makeNewTextContent(); // 음성 인식 시작시마다 새로운 문단을 추가한다.
 };
 recognition.onend = function () {
     recognition.start();
@@ -46,7 +57,7 @@ recognition.onresult = async function (e) {
     let texts = Array.from(e.results)
         .map(results => results[0].transcript).join("");
 
-    p.textContent = texts;
+    speechText.textContent = texts;
 
     //초성 일치하는지 확인
     let kor1 = texts[0];
@@ -60,15 +71,15 @@ recognition.onresult = async function (e) {
     let fn2 = parseInt(uni2 / 588);
 
     //1번 문제
-    makeNewTextContent();
+    // makeNewTextContent();
 
 
     //2번 문제
-    // if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2]) && ( await checkWord(texts.substring(0, 2)))) {
+     //if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2]) && ( await checkWord(texts.substring(0, 2))===true)) {
     if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2])) {
-        p.textContent = "정답!";
+        resultText.textContent = "정답!";
     } else {
-        p.textContent = "땡!"
+        resultText.textContent = "땡!"
     }
 
     console.log(texts);
