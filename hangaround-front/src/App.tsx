@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Main from './pages/Main'
 import './statics/fonts/index.css'
 import GameRoom from './pages/gameRoom'
+import STT from './pages/gameRoom/stt2'
 
 export default function App(): ReactElement {
   return (
@@ -16,6 +17,7 @@ export default function App(): ReactElement {
           <Route path="/login" element={<Login />} />
           <Route path="room" element={<GameRoom />} />
           <Route path="/" element={<Main />} />
+          <Route path="/stt" element={<STT />} />
         </Routes>
       </BrowserRouter>
     </StyledEngineProvider>
