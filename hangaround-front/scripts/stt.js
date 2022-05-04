@@ -1,11 +1,35 @@
-import {checkWord} from "./check.js";
+// STT API 테스트를 위한 데모 코드. 테스트 후 삭제 요망
+//단어 확인 함수: 오픈사전 API를 사용하여 사전에 단어와 일치하는 단어가 있는지 확인 후 결과(Boolean)를 반환
+async function checkWord(word) {
+    console.log('checking word');
 
-// let p = null;
-//
-// let makeNewTextContent = function () {
-//     p = document.createElement('p');
-//     document.querySelector('.words').appendChild(p);
-// };
+    const myConfig = {
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
+    }
+
+    let defaultURL = "https://cors-anywhere.herokuapp.com/http://opendict.korean.go.kr/api/search?";
+    const key = "key=" + "3AEBFCE00275CF07019291B8639C7CF9";
+    let part = "&part=word";
+    let q = "&q=" + word;
+    let sort = "&sort=dict";
+    let fullURL = defaultURL + key + part + q + sort;
+
+    let data = await axios.get(encodeURI(fullURL, {}, myConfig));
+
+    //console.log(data.data);
+    let n = data.data.indexOf(word);
+    if (n === -1) {
+        console.log('cannot find '+word);
+        return false;
+    } else {
+        let text = data.data.substring(n, n + word.length);
+        console.log('input word: ' + word + ', output word: ' + text + ' ,result: ' + (text === word));
+        return (text === word);
+    }
+}
+
 
 let cons = document.createElement('p');
 document.querySelector('.words').appendChild(cons);
@@ -18,7 +42,7 @@ document.querySelector('.words').appendChild(resultText);
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const recognition = new SpeechRecognition();
-recognition.interimResults = true;
+recognition.interimResults = false;
 recognition.lang = 'ko-KR';
 
 
@@ -36,21 +60,17 @@ while (true) {
         second = Math.floor(Math.random() * consonant.length);
 }
 
-//makeNewTextContent(); // 초성을 출력하기 전에 새로운 문단을 추가한다.
-
 cons.textContent = consonant[first] + consonant[second];
 console.log(consonant[first] + consonant[second]);
 
 
 recognition.start();
 
-recognition.onstart = function () {
-    // makeNewTextContent(); // 음성 인식 시작시마다 새로운 문단을 추가한다.
-};
+recognition.onstart = function () {};
+
 recognition.onend = function () {
     recognition.start();
 };
-
 
 
 recognition.onresult = async function (e) {
@@ -59,7 +79,7 @@ recognition.onresult = async function (e) {
 
     speechText.textContent = texts;
 
-    //초성 일치하는지 확인
+    //초성 일치하는지 확인하기 위해 단어로부터 초성을 분리
     let kor1 = texts[0];
     let uni1 = kor1.charCodeAt(0);
     uni1 = uni1 - 44032;
@@ -70,13 +90,9 @@ recognition.onresult = async function (e) {
     uni2 = uni2 - 44032;
     let fn2 = parseInt(uni2 / 588);
 
-    //1번 문제
-    // makeNewTextContent();
 
-
-    //2번 문제 => checkWord 함수가 호출이 안됨...
-    if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2]) && ( await checkWord(texts.substring(0, 2)))) {
-    //if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2])) {
+    //랜덤 초성과 단어의 초성이 일치하는지 확인, 단어 확인 함수를 통해 사전에 있는 단어인지 확인
+    if ((consonant[first] === f[fn1]) && (consonant[second] === f[fn2]) && (await checkWord(texts.substring(0, 2)))) {
         resultText.textContent = "정답!";
     } else {
         resultText.textContent = "땡!"
