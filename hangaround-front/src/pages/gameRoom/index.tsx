@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import { makeStyles } from '@mui/styles'
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import * as io from 'socket.io-client' 
 import Peer from "peerjs"
 
@@ -16,6 +17,12 @@ const useStyles = makeStyles({
       backgroundColor: '#000',
       height: '1500px'
     },
+    videoGroup: {
+      flexGrow: 1,
+      display: "flex",
+      justifyContent: "center",
+      padding: "1rem"
+    },
     optionBox: {
       display: 'flex',
       width: '30%',
@@ -30,15 +37,6 @@ const useStyles = makeStyles({
     }
   })
 
-// TODO(seungji): 여기서 game 참가자들을 서버에서 받아서 보여주는게 좋을듯
-
-// interface GameRoomProps {
-//   members: Member[]
-// }
-
-// const socket = io('http://localhost:3030')
-// const peer = new Peer()
-
 export default function GameRoom(): React.ReactElement {
   // const { members } = props 
   const classes = useStyles()
@@ -49,78 +47,73 @@ export default function GameRoom(): React.ReactElement {
 	const myVideo = useRef<HTMLVideoElement>(null)
   const otherVideo = useRef<HTMLVideoElement>(null)
   const othersVideos = useRef<HTMLVideoElement[]>([])
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition()
 
-  useEffect(() => {
-    const socket = io('http://localhost:3030')
-    const peer = new Peer()
-    peer.on("open", (id) => {
-      console.log('id', id)
-      socket.emit("join-room", 'RoomId', id, "abcd")
-    })
-
-    const onCall = (call) => {
-      console.log('someone call me')
-      console.log(stream)
-      call.answer(stream)
-      const _video1 = document.createElement("video");
-      setVideos(videos => [...videos, _video1])
-      _video1.autoplay = true
-      call.on("stream", (userVideoStream) => {
-        _video1.srcObject = userVideoStream;
-        // _video1.play();
-        // setVideos(videos => [...videos, _video1])
-    })}
-
-    const onStream = (stream) => {
-      setStream(stream)
-      myVideo.current.srcObject = stream
-      myVideo.current.play()
-      setVideos(videos => [...videos, myVideo.current])
-
-      peer.on("call", onCall)
-
-      socket.on("user-connected", (userId) => {
-        console.log('connectToNewUser', userId, stream)
-        const call = peer.call(userId, stream);
-        // const _video2 = document.createElement("video")
-        call.on("stream", (userVideoStream) => {
-          otherVideo.current.srcObject = userVideoStream;
-          otherVideo.current.play()
-          setVideos(videos => [...videos, otherVideo.current])
-          // _video2.play();
-          // setVideos(videos => [...videos, _video2])
-          // _video2.addEventListener("loadedmetadata", () => {
-          //   _video2.play();
-          //   setVideos(videos => [...videos, _video2])
-          //   console.log('videos?: ', videos, _video2)
-          // })
-        })
-      })
-    }
-
-    navigator.mediaDevices
-    .getUserMedia({
-      audio: true,
-      video: true,
-    }).then(onStream)
-    }, [])
-
-  const addVideoStream = (video: HTMLVideoElement, stream: MediaStream) => {
-      video.srcObject = stream;
-      video.addEventListener("loadedmetadata", () => {
-          video.play();
-          console.log('videos?: ', videos, video)
-          // const newVideos = videos.concat(video)
-          // if (videos.length > 0) {
-          //   othersVideos.current = [...othersVideos.current, video]
-          // }
-          // console.log('newVideos', newVideos)
-          setVideos([...videos, video])
-      })
+  if (!browserSupportsSpeechRecognition) {
+    console.error("Speech recognition not supported")
   }
 
+  useEffect(() => {
+    console.log(transcript)
+  }, [transcript])
+
+  useEffect(() => {
+    const socket = io('https://nodejs-video-chat-1.herokuapp.com/')
+    const peer = new Peer()
+
+    const videoGrid = document.getElementById("video-grid")
+    const myVideo = document.createElement("video")
+
+    navigator.mediaDevices
+      .getUserMedia({
+        audio: true,
+        video: true,
+      })
+      .then((stream: MediaStream) => {
+        setStream(stream)
+        addVideoStream(myVideo, stream)
+
+        peer.on("call", (call) => {
+          call.answer(stream)
+          const video = document.createElement("video")
+          call.on("stream", (userVideoStream) => {
+            addVideoStream(video, userVideoStream)
+          })
+        })
+
+        socket.on("user-connected", (userId: string) => {
+          connectToNewUser(userId, stream)
+        })
+      })
+
+    const connectToNewUser = (userId, stream) => {
+      const call = peer.call(userId, stream);
+      const video = document.createElement("video")
+      call.on("stream", (userVideoStream) => {
+          addVideoStream(video, userVideoStream)
+      })
+    }
+    
+    peer.on("open", (id) => {
+        socket.emit("join-room", 'ROOM_ID', id, 'seungji')
+    })
+    
+    const addVideoStream = (video, stream) => {
+        video.srcObject = stream
+        video.addEventListener("loadedmetadata", () => {
+            video.play()
+            videoGrid.append(video)
+        })
+    }
+  }, [])
+  
   const onMuteButtonClick = () => {
-    const enabled = stream.getAudioTracks()[0].enabled;
+    const enabled = stream.getAudioTracks()[0].enabled
     stream.getAudioTracks()[0].enabled = !enabled
     setIsMute(!enabled)
   }
@@ -137,10 +130,18 @@ export default function GameRoom(): React.ReactElement {
       window.location.href
     )
   }
+
   return (
     <Box className={classes.root}>
-      <VideoGroupWrapper myVideoRef={myVideo} otherVideoRef={otherVideo} videos={videos}/>
-      <OptionBox />
+      <div id="video-grid" className={classes.videoGroup}>
+
+      </div>
+      <OptionBox
+        onClickStartSpeech={
+          () => SpeechRecognition.startListening({ continuous: true, language: 'ko' })
+        }
+        onClickStopSpeech={() => SpeechRecognition.stopListening()}
+      />
     </Box>
   )
 }

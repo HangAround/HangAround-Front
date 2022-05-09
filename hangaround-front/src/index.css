@@ -16,6 +16,17 @@ span {
   font-family: "DungGeunmo";
 }
 
+video {
+  height: 300px;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  width: 400px;
+  object-fit: cover;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+}
+
 .mainLoginButtonBox {
  display: flex;
  flex-direction: row;

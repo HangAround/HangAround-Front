@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@mui/styles'
 import { Box, Button, ButtonGroup, Typography, Divider } from '@mui/material'
 import { ExitToApp, InsertLink, Settings, VideogameAsset } from '@mui/icons-material'
+import Member from './Member'
 
 const useStyles = makeStyles({
     optionBox: {
@@ -20,12 +21,14 @@ const useStyles = makeStyles({
     }
   })
 
-// interface GameRoomProps {
-//   members: Member[]
-// }
+interface OptionBoxProps {
+   members?: Member[]
+   onClickStartSpeech: () => void
+   onClickStopSpeech: () => void
+ }
 
-export default function OptionBox(): React.ReactElement {
-  // const { members } = props 
+export default function OptionBox(props: OptionBoxProps): React.ReactElement {
+  const { members, onClickStartSpeech, onClickStopSpeech } = props 
   const classes = useStyles()
 
   return (
@@ -43,6 +46,31 @@ export default function OptionBox(): React.ReactElement {
               <ExitToApp style={{ color: "#300253", width: 50, height: 50 }} />
             </Button>
           </Box>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Button
+            onClick={onClickStartSpeech}
+            sx={{
+              backgroundColor: 'white',
+              color: '#7030A0',
+              fontSize: 24,
+              fontFamily: 'DungGeunmo',
+              marginRight: 5
+            }}
+          >
+            말하기
+          </Button>
+          <Button
+            onClick={onClickStopSpeech}
+            sx={{
+              backgroundColor: 'white',
+              color: '#7030A0',
+              fontSize: 24,
+              fontFamily: 'DungGeunmo'
+            }}
+          >
+            멈추기
+          </Button>
         </Box>
         <Box className={classes.optionGroup}>
           <Box padding={3}>
