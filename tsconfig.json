@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "types": [ "node" ],
+    "jsx": "react",
+    "esModuleInterop": true
+  }
+}
+
+
+// typeRoots: 
+//   - "src/types"
+// compilerOptions:
+//   types:
+//     - "node"
+
