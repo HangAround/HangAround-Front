@@ -3,7 +3,7 @@ import {makeStyles} from '@mui/styles'
 import {Box, Button, Modal, Typography, TextField} from '@mui/material'
 // TODO(seungji): png 파일 모듈로 import 하는 법 찾아보기
 import '../index.css'
-import {useLocation} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 import {useModal} from 'react-modal-hook'
 import {KeyboardVoice, Settings, Videocam} from '@mui/icons-material'
 import axios from "axios";
@@ -54,6 +54,8 @@ export default function Main(): React.ReactElement {
     const [openNewModal, setOpenNewModal] = useState(false)
     const [openJoinModal, setOpenJoinModal] = useState(false)
     const location = useLocation()
+    const navigate = useNavigate()
+
 
     const handleOnNewGameModalClick = useCallback(() => {
         setOpenNewModal(true)
@@ -122,6 +124,8 @@ export default function Main(): React.ReactElement {
             .catch(function (error) {
                 console.log(error);
             });
+        console.log("complete!");
+        navigate('/room');
     }
 
     return (
