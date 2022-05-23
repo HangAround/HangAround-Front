@@ -21,7 +21,6 @@ export default function VideoGroupWrapper(
 ): React.ReactElement {
     // const { members } = props
     const classes = useStyles()
-    console.log(props.videos)
     return (
         <Box className={classes.videoGroup}>
           <Box 
