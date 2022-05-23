@@ -14,7 +14,7 @@ export default function App(): ReactElement {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="room" element={<GameRoom />} />
+          <Route path="/room/:roomCode" element={<GameRoom />} />
           <Route path="/" element={<Main />} />
         </Routes>
       </BrowserRouter>

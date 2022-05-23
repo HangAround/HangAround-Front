@@ -25,10 +25,6 @@ export default function VideoBox(props: {
   videoRef?: any,
   video?: HTMLVideoElement
 }): React.ReactElement {
-    // const { member } = props
-    console.log('ref', props.videoRef)
-    const classes = useStyles()
-
     return (
       <div>
         {props.videoRef !== undefined
