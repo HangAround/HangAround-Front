@@ -28,6 +28,7 @@ interface OptionBoxProps {
    isTimerOn: boolean
    answer?: string
    leftTime: number
+   roomName: string
    onClickStartSpeech: () => void
    onClickStopSpeech: () => void
    onClickInviteButton: () => void
@@ -40,6 +41,7 @@ export default function OptionBox(props: OptionBoxProps): React.ReactElement {
     isTimerOn,
     answer,
     leftTime,
+    roomName,
     onClickStartSpeech,
     onClickStopSpeech,
     onClickInviteButton,
@@ -49,7 +51,7 @@ export default function OptionBox(props: OptionBoxProps): React.ReactElement {
   return (
       <Box className={classes.optionBox}>
         <Box display="flex" flexDirection={"row"}>
-          <Typography color="white" variant="h3" fontFamily="Dunggeunmo">채팅방 이름</Typography>
+          <Typography color="white" variant="h3" fontFamily="Dunggeunmo">{roomName}</Typography>
           <Box marginLeft={0}>
             <Button onClick={onClickInviteButton}>
               <InsertLink style={{ color: "#300253", width: 50, height: 50 }} />

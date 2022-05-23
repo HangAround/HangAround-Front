@@ -5,3 +5,5 @@ export const GET_NEW_ROOM_CODE_PATH = process.env.REACT_APP_API_PATH + '/room/ne
 export const JOIN_ROOM_PATH = process.env.REACT_APP_API_PATH + '/room/join-room'
 export const getRoomMembersPath =
   (roomCode: string) => process.env.REACT_APP_API_PATH + `/room/${roomCode}/userInfo`
+export const getRoomInfoPath =
+  (roomCode: string) => process.env.REACT_APP_API_PATH + `/room/${roomCode}/roomInfo`

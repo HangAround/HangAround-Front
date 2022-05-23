@@ -9,7 +9,7 @@ import _ from "lodash"
 import axios from 'axios'
 
 import Member from './Member'
-import { getRoomMembersPath } from '../../api/ApiPath'
+import { getRoomMembersPath, getRoomInfoPath } from '../../api/ApiPath'
 import OptionBox from './OptionBox'
 
 const serverSocket =
@@ -56,6 +56,7 @@ export default function GameRoom(): React.ReactElement {
   const [leftTime, setLeftTime] = useState(0)
   const [isTimerOn, setIsTimerOn] = useState(false)
   const [isNoticeModalVisible, setIsNoticeModalVisible] = useState(false)
+  const [roomName, setRoomName] = useState('방 이름')
 
   const {
     transcript,
@@ -175,8 +176,8 @@ export default function GameRoom(): React.ReactElement {
 
   useEffect(() => {
     serverSocket.on("join", (data) => {
-      const apiPath = getRoomMembersPath(roomCode)
-      axios.get(apiPath, { headers }).then((result) => {
+      const getMemebersApiPath = getRoomMembersPath(roomCode)
+      axios.get(getMemebersApiPath, { headers }).then((result) => {
         if (result.data.isSuccess) {
           const members = result.data.result
           const membersList = members.map((member) => {
@@ -184,6 +185,12 @@ export default function GameRoom(): React.ReactElement {
             return newMember
           })
           setMembers(membersList)
+        }
+      })
+      const getRoomInfoApiPath = getRoomInfoPath(roomCode)
+      axios.get(getRoomInfoApiPath, { headers }).then((result) => {
+        if (result.data.isSuccess) {
+          setRoomName(result.data.result.roomName)
         }
       })
     })
@@ -251,6 +258,7 @@ export default function GameRoom(): React.ReactElement {
         leftTime={leftTime}
         answer={answer}
         members={members}
+        roomName={roomName}
         onClickStartSpeech={
           () => SpeechRecognition.startListening({ continuous: true, language: 'ko' })
         }
