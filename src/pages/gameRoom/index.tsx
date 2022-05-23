@@ -57,9 +57,6 @@ export default function GameRoom(): React.ReactElement {
   const [isTimerOn, setIsTimerOn] = useState(false)
   const [isNoticeModalVisible, setIsNoticeModalVisible] = useState(false)
 
-	const myVideo = useRef<HTMLVideoElement>(null)
-  const otherVideo = useRef<HTMLVideoElement>(null)
-  const othersVideos = useRef<HTMLVideoElement[]>([])
   const {
     transcript,
     browserSupportsSpeechRecognition
