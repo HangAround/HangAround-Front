@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Main from './pages/Main'
 import './statics/fonts/index.css'
 import GameRoom from './pages/gameRoom'
+import VideoBox from './pages/gameRoom/VideoBox'
 
 export default function App(): ReactElement {
   return (
@@ -16,6 +17,7 @@ export default function App(): ReactElement {
           <Route path="/login" element={<Login />} />
           <Route path="/room/:roomCode" element={<GameRoom />} />
           <Route path="/" element={<Main />} />
+          <Route path="/login" element={<VideoBox />} />
         </Routes>
       </BrowserRouter>
     </StyledEngineProvider>
