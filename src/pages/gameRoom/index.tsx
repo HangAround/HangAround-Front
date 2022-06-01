@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import { makeStyles } from '@mui/styles'
 import { Box, Typography } from '@mui/material'
@@ -47,6 +47,7 @@ export default function GameRoom(): React.ReactElement {
   // const { members } = props 
   const classes = useStyles()
   const { roomCode } = useParams()
+  const navigate = useNavigate()
   const userName = sessionStorage.getItem('userName')
   const headers = {
     Auth: sessionStorage.getItem('JWT')
@@ -66,6 +67,12 @@ export default function GameRoom(): React.ReactElement {
   if (!browserSupportsSpeechRecognition) {
     console.error("Speech recognition not supported")
   }
+
+  useEffect(() => {
+    if (sessionStorage.getItem('userId') === null) {
+      navigate('/login')
+    }
+  }, [navigate])
 
   useEffect(() => {
     serverSocket.emit('join', { roomCode: roomCode, name: userName })
